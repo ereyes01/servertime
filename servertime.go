@@ -28,13 +28,8 @@ func init() {
 // wish to send objects with timestamps to the server, and have the server
 // compute consistent timestamps using its own time, much like:
 // https://www.firebase.com/docs/web/api/servervalue/timestamp.html
-type ServerTime time.Time
-
-// MarshalJSON just uses the underlying time.Time's marshaling technique
-// (RFC 3339) to turn the contained time value into a JSON string.
-func (s ServerTime) MarshalJSON() ([]byte, error) {
-	t := time.Time(s)
-	return json.Marshal(t)
+type ServerTime struct {
+	time.Time
 }
 
 // UnmarshalJSON turns an RFC 3339 compliant JSON string into a time value. If
@@ -50,6 +45,6 @@ func (s *ServerTime) UnmarshalJSON(b []byte) error {
 		t = now.GetCurrentTime().UTC()
 	}
 
-	*s = ServerTime(t)
+	*s = ServerTime{t}
 	return nil
 }

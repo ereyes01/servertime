@@ -18,7 +18,7 @@ func (m *mockTimeNow) GetCurrentTime() time.Time {
 
 var _ = Describe("Servertime", func() {
 	It("Marshals/unmarshals a non-zero time value idempotently", func() {
-		happyNewYear1970 := ServerTime(time.Unix(1, 0).UTC())
+		happyNewYear1970 := ServerTime{time.Unix(1, 0).UTC()}
 		marshaled, err := json.Marshal(happyNewYear1970)
 		Expect(err).To(BeNil())
 
@@ -46,7 +46,7 @@ var _ = Describe("Servertime", func() {
 			err = json.Unmarshal(marshaled, &fromJSON)
 			Expect(err).To(BeNil())
 
-			expectedTime := ServerTime(mockTime.UTC())
+			expectedTime := ServerTime{mockTime.UTC()}
 			Expect(fromJSON).To(Equal(expectedTime))
 		})
 	})
