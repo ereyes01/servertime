@@ -6,7 +6,7 @@ package servertime
 // useful for applications that communicate with a server and want to have
 // consistent timestamps, arbitrated from a single server.
 //
-// This functionality is very similar (if not the same) to that offered by
+// This functionality is very similar (if not the same, logically) to that offered by
 // Firebase's ServerValue.TIMESTAMP feature
 // (https://www.firebase.com/docs/web/api/servervalue/timestamp.html). Unlike
 // Firebase's implementation, this library is 100% conformant to how Go
