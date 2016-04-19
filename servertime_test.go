@@ -18,8 +18,8 @@ func (m *mockTimeNow) GetCurrentTime() time.Time {
 }
 
 var _ = Describe("Servertime", func() {
-	It("Marshals/unmarshals a non-zero time value idempotently", func() {
-		happyNewYear1970 := ServerTime{time.Unix(1, 0).UTC()}
+	It("Marshals/unmarshals a time value idempotently", func() {
+		happyNewYear1970 := ServerTime{time.Unix(1, 0).UTC(), false}
 		marshaled, err := json.Marshal(happyNewYear1970)
 		Expect(err).To(BeNil())
 
@@ -38,16 +38,16 @@ var _ = Describe("Servertime", func() {
 			now = new(realTimeNow)
 		})
 
-		It("Unmarshals a zero time into the local system's time", func() {
-			zero := ServerTime{}
-			marshaled, err := json.Marshal(zero)
+		It("Unmarshals as the local system's time", func() {
+			setMe := ServerTime{SetTime: true}
+			marshaled, err := json.Marshal(setMe)
 			Expect(err).To(BeNil())
 
 			var fromJSON ServerTime
 			err = json.Unmarshal(marshaled, &fromJSON)
 			Expect(err).To(BeNil())
 
-			expectedTime := ServerTime{mockTime.UTC()}
+			expectedTime := ServerTime{mockTime.UTC(), false}
 			Expect(fromJSON).To(Equal(expectedTime))
 		})
 	})
