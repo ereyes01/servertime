@@ -2,6 +2,7 @@ package servertime
 
 import (
 	"encoding/json"
+	"testing"
 	"time"
 
 	. "github.com/onsi/ginkgo"
@@ -51,3 +52,8 @@ var _ = Describe("Servertime", func() {
 		})
 	})
 })
+
+func TestServertime(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "Servertime Suite")
+}
